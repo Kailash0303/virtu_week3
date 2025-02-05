@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Progress</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .navbar {
+
+            width: 100vw;
+            position:fixed;
+
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar .login-btn {
+            color: white;
+            text-decoration: none;
+            background-color: rgb(51, 150, 6);
+            padding: 5px 20px;
+            border-radius: 10px;
+            
+        }
+
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 80px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .container {
+            margin-left: 260px;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .chart {
+            max-width: 600px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .statistics {
+            margin-top: 20px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><h2>Goal Tracker</h2></div>
+        <a href="index.html" class="login-btn">Home</a>
+    </div>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="set_goals.html">Set Goals</a></li>
+            <li><a href="#">Progress</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="container"><br><br><br>
+        <h1>Goal Progress Overview</h1>
+        <canvas id="barChart" class="chart"></canvas>
+        <canvas id="pieChart" class="chart"></canvas>
+        <div id="statistics" class="statistics"></div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Goal Tracker. Need Help? <a href="#">Contact Us</a></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const goals = [
+                { name: "Fitness", progress: 75 },
+                { name: "Study", progress: 60 },
+                { name: "Savings", progress: 40 }
+            ];
+
+            function updateCharts() {
+                const ctxBar = document.getElementById("barChart").getContext("2d");
+                const ctxPie = document.getElementById("pieChart").getContext("2d");
+
+                const goalNames = goals.map(goal => goal.name);
+                const goalProgress = goals.map(goal => goal.progress);
+
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: goalNames,
+                        datasets: [{
+                            label: 'Progress',
+                            data: goalProgress,
+                            backgroundColor: 'rgba(0, 198, 255, 0.7)',
+                        }]
+                    }
+                });
+
+                new Chart(ctxPie, {
+                    type: 'pie',
+                    data: {
+                        labels: goalNames,
+                        datasets: [{
+                            data: goalProgress,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    }
+                });
+
+                displayStatistics();
+            }
+
+            function displayStatistics() {
+                const statisticsDiv = document.getElementById("statistics");
+                const totalProgress = goals.reduce((sum, goal) => sum + goal.progress, 0);
+                const avgProgress = (totalProgress / goals.length).toFixed(2);
+                statisticsDiv.innerHTML = `Total Progress: ${totalProgress}%, Average Progress: ${avgProgress}%`;
+            }
+
+            updateCharts();
+        });
+    </script>
+</body>
+</html>

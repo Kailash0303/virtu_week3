@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goal Tracker</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><h2>Goal Tracker</h2></div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search goals..." />
+        </div>
+        <a href="login.html" class="login-btn">Login</a>
+    </div>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="set_goals.html">Set Goals</a></li>
+            <li><a href="progress.html" id="progressLink">Progress</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>Track Your Goals Efficiently</h1>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>
+            &copy; 2025 Goal Tracker. Need Help?
+            <a href="#">Contact Us</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById("progressBar").addEventListener("click", function() {
+            window.location.href = "progress.html";
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
